@@ -1,0 +1,500 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b48">
+  <title>Meu portfólio — estação pessoal</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18243a;
+      --blue: #3c6e9f;
+      --glass: rgba(222, 239, 255, .82);
+      --line: #8298ae;
+      --paper: #f2f4f5;
+      --mint: #d8eadb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink);
+      font: 14px/1.55 "Segoe UI", Tahoma, sans-serif;
+      background: #536e75;
+      background-image: linear-gradient(135deg, rgba(8,28,45,.2), rgba(6,25,34,.48)),
+        radial-gradient(ellipse at 50% 25%, #b7caaa 0, #68847a 48%, #253d48 100%);
+      padding: 38px 20px 82px; isolation:isolate;
+    }
+    .wallpaper-video { position:fixed; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; pointer-events:none; }
+    body::before { content:""; position:fixed; z-index:-1; inset:0; pointer-events:none; background:linear-gradient(135deg,rgba(8,28,45,.28),rgba(6,25,34,.42)); }
+    a { color: #164d86; }
+    .desktop { max-width: 1080px; margin: auto; }
+    .desktop-icon { color: white; text-shadow: 0 1px 4px #14242a; width: 88px; text-align: center; margin-bottom: 18px; }
+    .desktop-icon span { display:block; font-size: 29px; filter: drop-shadow(0 2px 2px #222); }
+    .desktop-icon { font:inherit; background:transparent; }
+    .system-name { margin:0 0 12px 5px; color:#f2f7f6; font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; text-shadow:0 2px 6px #10232a; }
+    .desktop-icons { display:flex; align-items:flex-start; flex-wrap:wrap; gap:10px; margin:0 0 18px; }
+    .desktop-icon { margin:0; min-height:76px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:3px; padding:5px 7px; border:1px solid transparent; border-radius:5px; cursor:pointer; text-decoration:none; transition:background .18s,border-color .18s,transform .18s; }
+    .desktop-icon:hover { background:#d9efff35; border-color:#e4f5ff77; transform:translateY(-2px); }
+    .desktop-icon small { font-size:12px; color:#fff; }
+    .app-glyph { width:42px; height:42px; display:grid; place-items:center; filter:drop-shadow(0 3px 3px #14242a88); animation:icon-float 3.2s ease-in-out infinite; transition:transform .25s cubic-bezier(.2,.8,.2,1),filter .25s; }
+    .app-glyph svg { width:100%; height:100%; display:block; }
+    .desktop-icon:nth-child(2) .app-glyph { animation-delay:.3s; }
+    .desktop-icon:nth-child(3) .app-glyph { animation-delay:.65s; }
+    .desktop-icon:nth-child(4) .app-glyph { animation-delay:1s; }
+    .desktop-icon:nth-child(5) .app-glyph { animation-delay:1.35s; }
+    .desktop-icon:hover .app-glyph { transform:translateY(-5px) scale(1.17) rotate(-5deg); filter:drop-shadow(0 7px 5px #14242a99); }
+    .app-glyph.spotify { width:40px; height:40px; margin:0; border-radius:50%; background:transparent; color:inherit; font:inherit; }
+    .app-glyph.cs, .app-glyph.isaac, .app-glyph.osu { color:inherit; font:inherit; text-shadow:none; }
+    @keyframes icon-float { 0%,100% { transform:translateY(0) rotate(0); } 50% { transform:translateY(-4px) rotate(2deg); } }
+    .app-glyph.isaac { font-size:30px; }
+    .desktop-hint { color:#fff; opacity:.75; font-size:11px; text-shadow:0 1px 3px #14242a; margin:0 0 12px 4px; }
+    .window {
+      overflow: hidden; border: 1px solid #d6e5ef; border-radius: 9px 9px 4px 4px;
+      background: var(--paper); box-shadow: 0 22px 55px #101e2c88, 0 2px 5px #1118;
+    }
+    .titlebar {
+      min-height: 42px; display:flex; align-items:center; justify-content:space-between; gap: 12px;
+      padding: 7px 10px 7px 15px; color:#fff;
+      background: linear-gradient(#a9d7f2 0%, #4c91c5 13%, #235889 52%, #17406d 100%);
+      text-shadow: 0 1px 2px #18334e; border-bottom: 1px solid #153955;
+    }
+    .title { display:flex; align-items:center; gap:9px; font-weight:600; }
+    .title .orb { font-size:19px; }
+    .window-controls { display:flex; gap:5px; }
+    .window-controls i { width:22px; height:20px; display:grid; place-items:center; font-style:normal; font:bold 12px Arial; color:white; border:1px solid #e1f2ff; border-radius:3px; background:linear-gradient(#8ab9d9,#34709f); box-shadow: inset 0 1px #fff8; }
+    .window-controls i:last-child { background:linear-gradient(#f29b87,#b93d2d); }
+    .menubar { display:flex; gap:20px; padding:6px 15px; background:#f0f3f4; border-bottom:1px solid #d4dadd; font-size:13px; }
+    .menubar span:first-child:first-letter { text-decoration: underline; }
+    .toolbar { display:flex; align-items:center; gap:8px; padding:8px 13px; background:linear-gradient(#fff,#e7ebed); border-bottom:1px solid #c7ced2; color:#52616a; }
+    .toolbar .address { flex:1; background:white; border:1px solid #aebbc1; border-radius:3px; padding:4px 9px; color:#53616a; }
+    .toolbar b { color:#5c803a; font-size:17px; }
+    .content { padding: 25px clamp(16px, 4vw, 42px) 38px; }
+    .hero { display:grid; grid-template-columns: 1.4fr .72fr; gap:28px; align-items:center; padding: 12px 0 25px; }
+    .eyebrow { color:#547248; text-transform:uppercase; letter-spacing:.17em; font-weight:700; font-size:11px; }
+    h1 { margin:7px 0 5px; font-size:clamp(31px,5vw,49px); line-height:1.05; letter-spacing:-.04em; color:#193b52; }
+    .role { color:#4f6975; font-size:17px; margin:0 0 15px; }
+    .intro { max-width:590px; color:#45535b; font-size:15px; }
+    .actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:20px; }
+    .button { display:inline-block; text-decoration:none; border:1px solid #7892a0; border-radius:4px; padding:8px 13px; color:#23455d; background:linear-gradient(#fff,#e2e9ec); box-shadow:0 1px 2px #0002; font-weight:600; }
+    .button.primary { color:#fff; border-color:#28567c; background:linear-gradient(#72a6cf,#326b9b); text-shadow:0 1px #244760; }
+    .profile-photo { width:100%; height:100%; display:block; object-fit:cover; object-position:center; }
+    .portrait { aspect-ratio: 1 / 1; max-width:240px; justify-self:end; width:100%; border:1px solid #fff; outline:1px solid #aab9b7; padding:7px; background:linear-gradient(135deg,#e9eee8,#c3d0c7); box-shadow:0 5px 14px #263c3b33; }
+    .placeholder { height:100%; min-height:180px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:#71817c; background:linear-gradient(135deg,#dce6dd,#c8d7d0); border:1px dashed #8da399; }
+    .placeholder b { font-size:31px; font-weight:400; opacity:.75; }
+    .placeholder small { max-width:160px; padding:0 8px; font-size:11px; }
+    .section-heading { display:flex; align-items:center; gap:11px; margin:9px 0 13px; color:#264b60; font-size:18px; }
+    .section-heading:after { content:""; height:1px; flex:1; background:#cbd3d4; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:13px; }
+    .card { padding:13px; background:linear-gradient(#fff,#f1f3f1); border:1px solid #c6d0d1; border-radius:4px; box-shadow:0 1px 2px #172b4812; }
+    .card h3 { margin:2px 0 5px; color:#345b6d; font-size:15px; }
+    .card p { margin:0; color:#5c686a; font-size:13px; }
+    .project-image { height:112px; margin-bottom:11px; }
+    .project-image .placeholder { min-height:0; }
+    .tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; }
+    .tag { padding:2px 7px; border:1px solid #bdcfc3; border-radius:10px; background:#e5eee7; color:#52705c; font-size:11px; }
+    .project-card { display:flex; flex-direction:column; }
+    .project-card .project-image { display:block; height:150px; overflow:hidden; margin:0 0 11px; border-radius:3px; background:#dce5e2; }
+    .project-card .project-image img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s ease; }
+    .project-card:hover .project-image img { transform:scale(1.055); }
+    .project-card .tags { margin-bottom:12px; }
+    .project-link { align-self:flex-start; margin-top:auto; color:#2e6283; font-weight:700; font-size:12px; text-decoration:none; }
+    .project-link:hover { text-decoration:underline; }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .skill-list { display:flex; flex-wrap:wrap; gap:7px; }
+    .skill-list span { padding:5px 9px; background:#e5edf0; border:1px solid #c2d0d5; border-radius:3px; color:#3e5d6b; font-size:12px; }
+    .status { margin-top:24px; border:1px solid #c8d1d3; background:linear-gradient(#f4f6f4,#e6eae8); padding:9px 13px; color:#657274; font-size:12px; display:flex; justify-content:space-between; gap:12px; }
+    .status strong { color:#55754d; }
+    .taskbar { position:fixed; bottom:0; left:0; right:0; height:42px; display:flex; align-items:center; gap:14px; padding:4px 12px; color:white; background:linear-gradient(#294b58dd,#142a38f2); border-top:1px solid #d1e7e7aa; box-shadow:0 -3px 15px #14252c55; backdrop-filter:blur(8px); }
+    .start { font-weight:bold; border:1px solid #aad69e; border-radius:14px; padding:3px 16px 3px 10px; background:linear-gradient(#b4de8c,#4c913c 55%,#34702c); box-shadow:inset 0 1px #fff9,0 1px 3px #0008; text-shadow:0 1px 2px #284c25; }
+    .task-tab { padding:5px 15px; min-width:155px; border:1px solid #a9c0c544; border-radius:4px; background:#7896a333; }
+    .clock { margin-left:auto; padding:5px 11px; border-left:1px solid #ffffff35; }
+    .menubar { gap: 2px; position:relative; z-index:5; }
+    .menu-item { position:relative; }
+    .menu-item > button, .nav-button, .favorite-star, .window-controls button, .start, .task-tab { cursor:pointer; font:inherit; }
+    .menu-item > button { border:1px solid transparent; background:transparent; padding:3px 9px; color:#243644; border-radius:3px; }
+    .menu-item > button:hover, .menu-item.open > button { background:#dceaf3; border-color:#a9c0cd; }
+    .menu-pop { display:none; position:absolute; top:100%; left:0; min-width:205px; padding:5px; background:#f8fafb; border:1px solid #9eb1ba; box-shadow:0 8px 20px #142b3a44; border-radius:3px; }
+    .menu-item.open .menu-pop { display:block; animation: pop .14s ease-out; }
+    .menu-pop button { display:block; width:100%; border:0; background:transparent; text-align:left; padding:8px 10px; color:#253f51; font:inherit; border-radius:2px; cursor:pointer; }
+    .menu-pop button:hover { background:#dcebf4; }
+    .window-controls button { width:22px; height:20px; display:grid; place-items:center; font:bold 12px Arial; color:white; border:1px solid #e1f2ff; border-radius:3px; background:linear-gradient(#8ab9d9,#34709f); box-shadow:inset 0 1px #fff8; padding:0; }
+    .window-controls button:last-child { background:linear-gradient(#f29b87,#b93d2d); }
+    .nav-button, .favorite-star { border:0; background:transparent; color:#52616a; padding:3px; }
+    .nav-button:hover, .favorite-star:hover { transform:scale(1.16); color:#245d84; }
+    .favorite-star { color:#71883c; font-size:17px; }
+    .button, .card, .portrait { transition:transform .22s ease, box-shadow .22s ease; }
+    .button:hover { transform:translateY(-2px); box-shadow:0 5px 12px #152d3c33; }
+    .card:hover { transform:translateY(-4px); box-shadow:0 8px 18px #172b4822; }
+    .window { animation: window-in .65s cubic-bezier(.2,.8,.2,1) both; transform-origin:top center; }
+    .desktop-icon span { animation: bob 3s ease-in-out infinite; }
+    .eyebrow { animation: glow 2.8s ease-in-out infinite; }
+    .taskbar { z-index:10; }
+    .photo-widget { position:fixed; z-index:18; top:21vh; right:5vw; width:360px; padding:9px; color:#edf5f4; border:1px solid #e6f2f177; border-radius:8px; background:linear-gradient(145deg,#d8edee55,#244658dd); box-shadow:0 15px 38px #07172288,inset 0 1px #ffffff88; backdrop-filter:blur(10px); }
+    #photoWidget2 { top:48vh; right:5vw; }
+    #photoWidget3 { top:21vh; right:calc(5vw + 390px); }
+    .photo-widget[hidden] { display:none; }
+    .photo-widget-head { display:flex; align-items:center; gap:8px; min-height:28px; padding:2px 3px 8px; cursor:grab; user-select:none; touch-action:none; }
+    .photo-widget-head:active { cursor:grabbing; }
+    .photo-widget-title { flex:1; font-size:12px; font-weight:700; text-shadow:0 1px 3px #10232a; }
+    .photo-widget-close { width:22px; height:22px; border:1px solid #ffffff66; border-radius:4px; color:#fff; background:#17344788; cursor:pointer; }
+    .photo-widget-frame { position:relative; display:grid; place-items:center; height:210px; overflow:hidden; border:1px solid #ffffffbb; background:linear-gradient(145deg,#cbdcd3,#849e9b); }
+    .photo-widget-frame img { width:100%; height:100%; object-fit:contain; background:#14222b; }
+    .photo-widget-empty { padding:15px; color:#f8ffff; text-align:center; font-size:12px; text-shadow:0 1px 5px #17303b; }
+    .photo-widget-empty b { display:block; font-size:32px; font-weight:400; }
+    .photo-widget-actions { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 2px 1px; font-size:11px; }
+    .photo-widget-add { padding:5px 9px; border:1px solid #ffffff66; border-radius:12px; color:white; background:#193e56aa; cursor:pointer; }
+    .widget-task { min-width:0; padding-left:10px; padding-right:10px; }
+    @media(max-width:700px) { .photo-widget { top:82px; width:min(90vw,420px); min-width:0; max-width:calc(100vw - 16px); padding:7px; } #photoWidget { left:5vw; right:auto; } #photoWidget2 { left:8vw; right:auto; top:38vh; } #photoWidget3 { left:5vw; right:auto; top:68vh; } .photo-widget-frame { height:180px; } .photo-widget-title { font-size:11px; } .photo-widget-actions { flex-wrap:wrap; font-size:10px; } .photo-widget-add { padding:5px 8px; } }
+    .app-overlay { position:fixed; inset:18px 16px 52px; z-index:30; display:none; align-items:center; justify-content:center; pointer-events:none; }
+    .app-overlay.open { display:flex; }
+    .app-window { width:min(760px,100%); max-height:100%; display:flex; flex-direction:column; overflow:hidden; pointer-events:auto; border:1px solid #d6e5ef; border-radius:8px; background:#f2f4f5; box-shadow:0 22px 65px #08182299; animation:window-in .28s ease-out; }
+    .app-window.maximized { width:100%; height:100%; max-height:100%; }
+    .app-titlebar { flex:0 0 auto; display:flex; align-items:center; gap:9px; padding:8px 10px 8px 14px; color:white; background:linear-gradient(#8cc1e5,#235889 55%,#17406d); }
+    .app-titlebar strong { margin-right:auto; }
+    .app-titlebar button { width:25px; height:23px; border:1px solid #ffffff99; border-radius:3px; color:white; background:#ffffff22; cursor:pointer; }
+    .app-titlebar button:last-child { background:#bd5145; }
+    .app-content { padding:22px; overflow:auto; color:#243642; }
+    .app-content h2 { margin:0 0 10px; color:#20465c; }
+    .app-content .cards { grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); }
+    .app-content .hero { grid-template-columns:1fr 150px; padding:0; }
+    .app-content .portrait { max-width:150px; }
+    .app-content .placeholder { min-height:120px; }
+    .app-content .skill-list { margin:10px 0; }
+    .app-content .card { margin-bottom:10px; }
+    .app-content textarea { width:100%; min-height:240px; resize:vertical; padding:12px; border:1px solid #9eb1ba; border-radius:4px; font:14px/1.5 "Segoe UI",sans-serif; }
+    .app-action { display:inline-block; padding:9px 13px; border:1px solid #28567c; border-radius:4px; color:white; background:linear-gradient(#72a6cf,#326b9b); text-decoration:none; cursor:pointer; }
+    .task-app-tab { display:none; }
+    .task-app-tab.visible { display:block; }
+    .music-overlay { position:fixed; inset:0; z-index:40; display:none; align-items:center; justify-content:center; padding:18px; background:#07131bd9; backdrop-filter:blur(7px); }
+    .music-overlay.open { display:flex; animation:fade-in .22s ease-out; }
+    .music-app { width:min(900px,100%); max-height:min(720px,92vh); overflow:auto; color:#eef3f4; border:1px solid #6b8581; border-radius:9px; background:linear-gradient(140deg,#243d3b,#121d24 58%); box-shadow:0 24px 75px #000a; }
+    .music-top { display:flex; align-items:center; gap:12px; padding:15px 18px; border-bottom:1px solid #ffffff1c; }
+    .music-brand { display:flex; align-items:center; gap:9px; margin-right:auto; font-weight:700; font-size:18px; }
+    .music-brand .brand-mark { color:#1ed760; font-size:25px; }
+    .music-close { width:32px; height:32px; border:1px solid #ffffff35; border-radius:50%; color:white; background:#ffffff12; cursor:pointer; font-size:19px; }
+    .music-layout { display:grid; grid-template-columns:1.15fr .85fr; gap:22px; padding:22px; }
+    .music-kicker { color:#a8c2af; font-size:11px; text-transform:uppercase; letter-spacing:.16em; }
+    .music-app h2 { margin:4px 0 5px; font-size:27px; }
+    .music-description { color:#b8c7c4; margin:0 0 16px; font-size:13px; }
+    .album-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .album-tile { min-width:0; padding:10px; border:1px solid #ffffff14; border-radius:6px; background:#ffffff0b; text-align:left; color:white; cursor:pointer; transition:transform .2s,background .2s; }
+    .album-tile:hover { transform:translateY(-3px); background:#ffffff18; }
+    .album-art { aspect-ratio:1; display:grid; place-items:center; margin-bottom:9px; border-radius:4px; font-size:32px; box-shadow:inset 0 0 35px #0003; }
+    .album-art.one { background:linear-gradient(135deg,#d07859,#614d72 60%,#182a3c); }
+    .album-art.two { background:linear-gradient(135deg,#e6b34c,#6c693a 55%,#28352c); }
+    .album-art.three { background:linear-gradient(135deg,#568b92,#b8c9b0 52%,#5a6579); }
+    .album-art.four { background:linear-gradient(135deg,#a25771,#422e51 55%,#1d2532); }
+    .album-tile strong, .album-tile small { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .album-tile small { margin-top:2px; color:#b7c7c4; }
+    .music-app [hidden] { display:none !important; }
+    .album-detail { display:grid; grid-template-columns:minmax(120px, .7fr) 1.3fr; gap:17px; align-items:center; margin-top:14px; padding:13px; border:1px solid #ffffff18; border-radius:7px; background:#ffffff0b; }
+    .detail-cover { width:100%; margin:0; }
+    .detail-copy h2 { margin:4px 0; }
+    .detail-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:13px; }
+    .detail-button { padding:8px 11px; border:0; border-radius:16px; color:#102218; background:#1ed760; font-weight:700; cursor:pointer; }
+    .detail-button.secondary-detail { color:#edf4f1; border:1px solid #ffffff38; background:transparent; }
+    .library-picker { display:grid; gap:5px; margin-top:10px; max-height:150px; overflow:auto; }
+    .library-pick-row { padding:7px 9px; border:1px solid #ffffff1a; border-radius:4px; background:#ffffff0c; color:#eaf1ee; text-align:left; cursor:pointer; }
+    .library-pick-row:hover { background:#ffffff21; }
+    .photo-gallery { margin:0 0 20px; }
+    .photo-frame { position:relative; height:180px; overflow:hidden; display:grid; place-items:center; border:1px solid #ffffff2a; border-radius:6px; background:linear-gradient(145deg,#35544a,#1b2a31 55%,#654d66); box-shadow:inset 0 0 35px #07101577; }
+    .photo-frame::before, .photo-frame::after { content:""; position:absolute; border-radius:50%; filter:blur(1px); opacity:.35; }
+    .photo-frame::before { width:150px; height:150px; right:-22px; top:-38px; background:#dcb978; }
+    .photo-frame::after { width:190px; height:110px; left:-25px; bottom:-64px; background:#75aaa0; }
+    .photo-frame.has-photo::before, .photo-frame.has-photo::after { display:none; }
+    .photo-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.04); transition:opacity .8s ease,transform 4.5s ease; }
+    .photo-slide.visible { opacity:1; transform:scale(1); }
+    .photo-empty { position:relative; z-index:1; text-align:center; color:#ecf4ef; padding:14px; text-shadow:0 2px 8px #101a20; }
+    .photo-empty strong { display:block; font-size:32px; font-weight:400; }
+    .photo-empty span { display:block; font-size:12px; }
+    .photo-frame.has-photo .photo-empty { display:none; }
+    .photo-caption { position:absolute; z-index:2; left:0; right:0; bottom:0; padding:24px 10px 8px; color:white; font-size:11px; background:linear-gradient(transparent,#071015b8); }
+    .photo-tools { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:8px; }
+    .photo-tools small { color:#a9bcb7; }
+    .pick-photo { padding:6px 10px; border:1px solid #ffffff33; border-radius:14px; color:#e9f1ed; background:#ffffff12; font-size:11px; cursor:pointer; }
+    .pick-photo:hover { background:#ffffff24; }
+    .photo-dots { position:absolute; z-index:3; right:8px; top:8px; display:flex; gap:4px; }
+    .photo-dot { width:7px; height:7px; padding:0; border:0; border-radius:50%; background:#ffffff80; cursor:pointer; }
+    .photo-dot.active { background:#fff; transform:scale(1.25); }
+    .music-side { padding:15px; border:1px solid #ffffff18; border-radius:7px; background:#0b151b75; }
+    .music-side h3 { margin:0 0 4px; }
+    .music-side p { margin:0 0 12px; color:#b8c7c4; font-size:12px; }
+    .pick-audio { display:inline-flex; align-items:center; gap:7px; padding:8px 11px; color:#0e2117; background:#1ed760; border:0; border-radius:18px; font-weight:700; cursor:pointer; }
+    .pick-audio:hover { background:#43e477; }
+    .track-list { display:grid; gap:5px; margin-top:13px; max-height:180px; overflow:auto; }
+    .track-row { display:flex; align-items:center; width:100%; gap:9px; border:0; border-radius:4px; padding:8px; color:#eaf1ee; background:transparent; text-align:left; cursor:pointer; }
+    .track-row:hover, .track-row.active { background:#ffffff18; }
+    .track-row small { display:block; color:#a9bcb7; }
+    .track-row .track-num { color:#9eb2ad; width:18px; }
+    .music-player { display:grid; grid-template-columns:1fr auto; align-items:center; gap:12px; padding:13px 18px 16px; border-top:1px solid #ffffff1c; background:#0d171d88; }
+    .now-playing { min-width:0; }
+    .now-playing strong, .now-playing span { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+    .now-playing span { color:#a9bcb7; font-size:12px; }
+    .player-controls { display:flex; align-items:center; gap:10px; }
+    .player-controls button { width:36px; height:36px; border:0; border-radius:50%; color:#13231a; background:#1ed760; cursor:pointer; font-size:16px; }
+    .player-controls button.secondary { color:white; background:#ffffff1c; }
+    .player-controls button:disabled { opacity:.45; cursor:not-allowed; }
+    .music-progress { grid-column:1/-1; width:100%; accent-color:#1ed760; cursor:pointer; }
+    .music-time { grid-column:1/-1; display:flex; justify-content:space-between; color:#9fb3ae; font-size:11px; margin-top:-11px; }
+    .music-audio { display:none; }
+    @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+    @media(max-width:650px) { .music-layout { grid-template-columns:1fr; padding:15px; gap:14px; } .music-app h2 { font-size:22px; } .album-grid { grid-template-columns:repeat(2,1fr); } }
+    .start:hover { filter:brightness(1.12); }
+    .task-tab { color:white; }
+    .window.is-minimized { display:none; }
+    .window.is-maximized { position:fixed; z-index:8; inset:8px; overflow:auto; }
+    body.dark { --ink:#e4edf2; --paper:#202c34; color:#e4edf2; background:#111d25; }
+    body.dark .content, body.dark .window { background:#202c34; }
+    body.dark h1, body.dark .section-heading, body.dark .card h3 { color:#b8d9ed; }
+    body.dark .intro, body.dark .role, body.dark .card p { color:#c0ccd2; }
+    body.dark .card, body.dark .status { background:linear-gradient(#2d3b43,#26333a); border-color:#52636b; }
+    body.dark .menubar, body.dark .toolbar { background:#303d44; color:#e0e8eb; border-color:#52616a; }
+    body.dark .menu-item > button, body.dark .menu-pop button { color:#e0e8eb; }
+    body.dark .menu-pop { background:#26343c; border-color:#657984; }
+    body.dark .menu-pop button:hover { background:#3c5665; }
+    body.dark .toolbar .address { background:#1d2b33; color:#dce6e9; border-color:#647780; }
+    body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
+    .toast { position:fixed; z-index:20; left:50%; bottom:56px; transform:translate(-50%,12px); opacity:0; pointer-events:none; padding:10px 16px; max-width:min(90vw,480px); border:1px solid #bad0db; border-radius:5px; color:#193b52; background:#f7fbfd; box-shadow:0 5px 18px #10243155; transition:opacity .2s, transform .2s; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    .spark { position:fixed; z-index:30; pointer-events:none; animation:sparkle 850ms ease-out forwards; }
+    html { scroll-behavior:smooth; }
+    @keyframes pop { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes window-in { from { opacity:0; transform:translateY(14px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-5px); } }
+    @keyframes glow { 0%,100% { opacity:1; } 50% { opacity:.62; } }
+    @keyframes sparkle { to { opacity:0; transform:translate(var(--dx),var(--dy)) rotate(130deg) scale(.2); } }
+    @media(max-width:700px) { .hero { grid-template-columns:1fr; } .portrait { justify-self:start; max-width:180px; } .cards { grid-template-columns:1fr; } .about-grid { grid-template-columns:1fr; } .menubar { gap:12px; font-size:12px; } .toolbar .address { overflow:hidden; white-space:nowrap; } }
+  </style>
+</head>
+<body>
+  <video class="wallpaper-video" autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="PinGrab_1791461910072.mp4" type="video/mp4"></video>
+  <aside class="photo-widget" id="photoWidget" aria-label="Porta-retrato flutuante"><header class="photo-widget-head" id="photoWidgetHandle"><span>✦</span><span class="photo-widget-title">Meu cantinho</span><button class="photo-widget-close" id="photoWidgetClose" type="button" aria-label="Ocultar porta-retrato">×</button></header><div class="photo-widget-frame" id="photoWidgetFrame"><div class="photo-widget-empty" id="photoWidgetEmpty"><b>▧</b>Uma imagem para deixar sua área de trabalho com a sua cara</div></div><div class="photo-widget-actions"><span id="photoWidgetCaption">Porta-retrato</span><label class="photo-widget-add" for="photoWidgetPicker">＋ Colocar imagem</label><input id="photoWidgetPicker" type="file" accept="image/*" hidden></div></aside>
+  <aside class="photo-widget" id="photoWidget2" aria-label="Moldura flutuante 2"><header class="photo-widget-head"><span>✦</span><span class="photo-widget-title">Foto flutuante 2</span><button class="photo-widget-close" type="button" aria-label="Ocultar moldura">×</button></header><div class="photo-widget-frame"><div class="photo-widget-empty"><b>▧</b>Seu espaço para foto</div></div><div class="photo-widget-actions"><span class="photo-widget-caption">Porta-retrato</span><label class="photo-widget-add">＋ Colocar imagem<input type="file" accept="image/*" hidden></label></div></aside>
+  <aside class="photo-widget" id="photoWidget3" aria-label="Moldura flutuante 3"><header class="photo-widget-head"><span>✦</span><span class="photo-widget-title">Foto flutuante 3</span><button class="photo-widget-close" type="button" aria-label="Ocultar moldura">×</button></header><div class="photo-widget-frame"><div class="photo-widget-empty"><b>▧</b>Seu espaço para foto</div></div><div class="photo-widget-actions"><span class="photo-widget-caption">Porta-retrato</span><label class="photo-widget-add">＋ Colocar imagem<input type="file" accept="image/*" hidden></label></div></aside>
+  <main class="desktop">
+    <div class="system-name">Aurora Desk · Meu Sistema</div>
+    <div class="desktop-icons" aria-label="Atalhos da área de trabalho">
+      <button class="desktop-icon" type="button" data-home-window aria-label="Abrir janela do portfólio"><span class="app-glyph">🖥️</span><small>Meu portfólio</small></button>
+      <button class="desktop-icon" type="button" data-open-music aria-label="Abrir meu player de música"><span class="app-glyph spotify"><svg viewBox="0 0 100 100" role="img" aria-label="Spotify"><circle cx="50" cy="50" r="49" fill="#1ed760"/><path d="M24 38c19-6 41-3 56 6" fill="none" stroke="#101510" stroke-width="8" stroke-linecap="round"/><path d="M28 51c16-5 34-2 47 5" fill="none" stroke="#101510" stroke-width="7" stroke-linecap="round"/><path d="M32 64c13-4 26-1 37 5" fill="none" stroke="#101510" stroke-width="6" stroke-linecap="round"/></svg></span><small>Spotify</small></button>
+      <a class="desktop-icon" href="https://store.steampowered.com/app/730/CounterStrike_2/" target="_blank" rel="noopener noreferrer" aria-label="Counter-Strike 2 na Steam"><span class="app-glyph cs"><svg viewBox="0 0 100 100" role="img" aria-label="Counter-Strike"><rect width="100" height="100" rx="14" fill="#ed8a12"/><path d="M63 19h27v16H67L50 48h32v15H54L36 80H10l30-47h25z" fill="#fff"/><path d="M15 75c6-8 7-19 10-28 3-10 8-17 14-21l9 2-3 11 9-3 4 5-10 6-3 13-8 8-5 14H18l4-13-7-4z" fill="#171717"/><path d="M31 39l27-8 2 4-28 10zM50 34l30-7 1 3-30 8z" fill="#171717"/><circle cx="38" cy="25" r="7" fill="#171717"/></svg></span><small>Counter-Strike</small></a>
+      <a class="desktop-icon" href="https://store.steampowered.com/app/250900/The_Binding_of_Isaac_Rebirth/" target="_blank" rel="noopener noreferrer" aria-label="The Binding of Isaac na Steam"><span class="app-glyph isaac"><svg viewBox="0 0 100 100" role="img" aria-label="The Binding of Isaac"><rect x="4" y="4" width="92" height="92" rx="13" fill="#292125"/><path d="M50 12c22 0 35 17 34 39-1 22-13 39-34 39S15 73 16 51C17 29 28 12 50 12z" fill="#e8c6c6" stroke="#241d20" stroke-width="6"/><path d="M24 41h22v22H24zM54 41h22v22H54z" fill="#292125"/><path d="M29 44h9v10h-9zM59 44h9v10h-9z" fill="#fff"/><path d="M42 68h16v7H42z" fill="#6e4144"/><path d="M20 34l-7-7m67 7 7-7M32 82l-4 9m40-9 4 9" stroke="#292125" stroke-width="6" stroke-linecap="square"/></svg></span><small>Binding of Isaac</small></a>
+    <a class="desktop-icon" href="https://osu.ppy.sh/" target="_blank" rel="noopener noreferrer" aria-label="Abrir osu"><span class="app-glyph osu"><svg viewBox="0 0 100 100" role="img" aria-label="osu!"><circle cx="50" cy="50" r="47" fill="#ed69a5" stroke="#f8d9e8" stroke-width="5"/><circle cx="50" cy="50" r="38" fill="none" stroke="#d84f8e" stroke-width="1.5"/><text x="50" y="61" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="32" fill="white">osu!</text><path d="M14 71l72-34M22 85l65-31" stroke="#fff" stroke-opacity=".12" stroke-width="2"/></svg></span><small>osu!</small></a>
+            <button class="desktop-icon" type="button" data-app="about"><span class="app-glyph">👤</span><small>Sobre mim</small></button>
+      <button class="desktop-icon" type="button" data-app="projects"><span class="app-glyph">🗂️</span><small>Meus Projetos</small></button>
+      <button class="desktop-icon" type="button" data-app="skills"><span class="app-glyph">🛠️</span><small>Habilidades</small></button>
+      <button class="desktop-icon" type="button" data-app="resume"><span class="app-glyph">📄</span><small>Currículo</small></button>
+      <button class="desktop-icon" type="button" data-app="contact"><span class="app-glyph">✉️</span><small>Contato</small></button>
+      <button class="desktop-icon" type="button" data-app="notes"><span class="app-glyph">📝</span><small>Meu Bloco</small></button></div>
+    <p class="desktop-hint">Abra os aplicativos com um clique — Aurora Desk</p>
+    <section class="window is-minimized" aria-label="Portfólio pessoal">
+      <header class="titlebar"><div class="title"><span class="orb">🌐</span> Meu Portfólio — Estação Pessoal</div><div class="window-controls"><button type="button" aria-label="Minimizar" data-window="min">_</button><button type="button" aria-label="Maximizar" data-window="max">□</button><button type="button" aria-label="Fechar janela" data-window="close">×</button></div></header>
+      <nav class="menubar" aria-label="Menu"><div class="menu-item"><button type="button" aria-expanded="false">Arquivo</button><div class="menu-pop"><button data-action="home">⌂ Início</button><button data-action="print">▤ Imprimir / salvar PDF</button><button data-action="about">✉ Contato</button></div></div><div class="menu-item"><button type="button" aria-expanded="false">Editar</button><div class="menu-pop"><button data-action="copy">▣ Copiar e-mail</button><button data-action="top">↑ Voltar ao topo</button></div></div><div class="menu-item"><button type="button" aria-expanded="false">Exibir</button><div class="menu-pop"><button data-action="theme">☾ Alternar tema</button><button data-action="motion">✦ Pausar animações</button><button data-action="zoom-in">＋ Aumentar texto</button><button data-action="zoom-out">－ Diminuir texto</button></div></div><div class="menu-item"><button type="button" aria-expanded="false">Favoritos</button><div class="menu-pop"><button data-action="projects">★ Meus projetos</button><button data-action="linkedin">↗ Abrir LinkedIn</button></div></div><div class="menu-item"><button type="button" aria-expanded="false">Ajuda</button><div class="menu-pop"><button data-action="help">? Como navegar</button><button data-action="easter">✿ Surpresa</button></div></div></nav>
+      <div class="toolbar"><button class="nav-button" data-nav="back" aria-label="Voltar">◀</button><button class="nav-button" data-nav="forward" aria-label="Avançar">▶</button><button class="nav-button" data-nav="reload" aria-label="Recarregar">↻</button><span class="address">⌂ &nbsp; portfolio://inicio</span><button class="favorite-star" data-action="favorite" aria-label="Favoritar">★</button></div>
+      <div class="content">
+        <section class="hero">
+          <div>
+            <div class="eyebrow">✦ Bem-vindo à minha estação</div>
+            <h1>Olá, eu sou<br>Gustavo</h1>
+            <p class="role">Música, programação e guitarra</p>
+            <p class="intro">Gosto muito de escutar música, de programar e de tocar guitarra. Este é meu cantinho para compartilhar um pouco do que eu gosto e dos projetos que crio.</p>
+            <div class="actions"><a class="button primary" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">↗ Meu LinkedIn</a><a class="button" href="mailto:seuemail@exemplo.com">✉ Me mande um e-mail</a></div>
+          </div>
+          <div class="portrait"><img class="profile-photo" src="Cloud Noona _ We Heart It.jpg" alt="Cloud Noona"></div>
+        </section>
+        <h2 class="section-heading">▣ &nbsp; Meus projetos</h2>
+        <section class="cards" aria-label="Projetos">
+          <article class="card project-card"><a class="project-image" href="https://github.com/GustavoCarvalhoDomingues/blueatividade" target="_blank" rel="noopener noreferrer" aria-label="Ver Burro Bluetooth no GitHub"><img src="fotos/00dadadf2aff042e1ee869f290d8082b.jpg" alt="Imagem do projeto Burro"></a><h3>Burro Bluetooth</h3><p>Jogo de cartas para Android. Jogue treino no mesmo aparelho ou conecte celulares por Bluetooth.</p><div class="tags"><span class="tag">Vue 3</span><span class="tag">Ionic</span><span class="tag">Bluetooth</span></div><a class="project-link" href="https://github.com/GustavoCarvalhoDomingues/blueatividade" target="_blank" rel="noopener noreferrer">Ver repositório ↗</a></article>
+          <article class="card project-card"><a class="project-image" href="https://github.com/GustavoCarvalhoDomingues/galeria-atividades" target="_blank" rel="noopener noreferrer" aria-label="Ver Minha Galeria no GitHub"><img src="fotos/poro.jpg" alt="Imagem do projeto Minha Galeria"></a><h3>Minha Galeria</h3><p>Aplicativo para Android com login e uma galeria pessoal: tire fotos ou escolha imagens do dispositivo.</p><div class="tags"><span class="tag">Android Studio</span><span class="tag">Galeria</span><span class="tag">Mobile</span></div><a class="project-link" href="https://github.com/GustavoCarvalhoDomingues/galeria-atividades" target="_blank" rel="noopener noreferrer">Ver repositório ↗</a></article>
+          <article class="card project-card"><a class="project-image" href="https://github.com/GustavoCarvalhoDomingues/albummcaopa" target="_blank" rel="noopener noreferrer" aria-label="Ver Álbum Digital da Copa no GitHub"><img src="fotos/Suzuya.jpg" alt="Imagem do projeto Álbum Digital da Copa"></a><h3>Álbum Digital da Copa 2026</h3><p>Álbum de figurinhas estilo gacha: colecione jogadores, pesquise por nome ou seleção e acompanhe seu progresso.</p><div class="tags"><span class="tag">Vue 3</span><span class="tag">Ionic</span><span class="tag">TypeScript</span></div><a class="project-link" href="https://github.com/GustavoCarvalhoDomingues/albummcaopa" target="_blank" rel="noopener noreferrer">Ver repositório ↗</a></article>
+        </section>
+        <h2 class="section-heading">▤ &nbsp; Sobre mim</h2>
+        <section class="about-grid">
+          <article class="card"><h3>Um pouco da minha história</h3><p>Meu nome é Gustavo. Gosto muito de escutar música, um pouco de programar e também gosto de tocar guitarra.</p></article>
+          <article class="card"><h3>Caixa de ferramentas</h3><div class="skill-list"><span>Programação</span><span>Design</span><span>Comunicação</span><span>Ferramentas</span><span>Idiomas</span></div></article>
+        </section>
+        <div class="status"><span><strong>● Online</strong> — obrigado pela visita!</span><span>Feito com carinho &nbsp; ✿</span></div>
+      </div>
+    </section>
+  </main>
+<div class="app-overlay" id="appOverlay" aria-live="polite"><section class="app-window" id="appWindow" role="dialog" aria-modal="true"><header class="app-titlebar"><span id="appIcon">▣</span><strong id="appTitle">Aplicativo</strong><button type="button" id="appMinimize" aria-label="Minimizar">_</button><button type="button" id="appMaximize" aria-label="Maximizar">□</button><button type="button" id="appClose" aria-label="Fechar">×</button></header><div class="app-content" id="appContent"></div></section></div>
+  <footer class="taskbar"><button class="start" id="startButton">◉ Iniciar</button><button class="task-tab" id="taskButton">🌐 &nbsp; Meu Portfólio</button><button class="task-tab" id="musicTaskButton">♫ &nbsp; Meu player</button><button class="task-tab widget-task" id="photoWidgetTask">▧ Fotos</button><button class="task-tab task-app-tab" id="appTaskButton"></button><div class="clock" id="clock">⌁ &nbsp; --:--</div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div><div class="music-overlay" id="musicOverlay" role="dialog" aria-modal="true" aria-labelledby="musicTitle">
+  <section class="music-app">
+    <header class="music-top"><div class="music-brand"><span class="brand-mark">●</span> Minha música</div><span class="music-kicker">player pessoal</span><button class="music-close" id="musicClose" aria-label="Fechar player">×</button></header>
+    <div class="music-layout">
+      <section><div class="music-kicker">Sua biblioteca</div><h2 id="musicTitle">Sons que eu curto</h2><p class="music-description">Um cantinho para reunir suas músicas e álbuns favoritos. Selecione arquivos de áudio para começar a tocar.</p>
+        <div class="album-grid">
+          <button class="album-tile" data-album="album"><span class="album-art one">♫</span><strong>Meu álbum</strong><small>Uma coleção pessoal</small></button>
+          <button class="album-tile" data-album="favoritas"><span class="album-art two">☼</span><strong>Favoritas</strong><small>As músicas que mais gosto</small></button>
+          <button class="album-tile" data-album="energia"><span class="album-art three">✦</span><strong>Energia boa</strong><small>Som para acompanhar o dia</small></button>
+          <button class="album-tile" data-album="noite"><span class="album-art four">☾</span><strong>Playlist da noite</strong><small>Minhas escolhas noturnas</small></button>
+        </div>
+        <section class="album-detail" id="albumDetail" hidden><div class="detail-cover album-art one" id="detailCover">♫</div><div class="detail-copy"><div class="music-kicker">Álbum selecionado</div><h2 id="detailTitle">Meu álbum</h2><p class="music-description" id="detailDescription">Suas músicas favoritas em um só lugar.</p><div class="detail-actions"><button class="detail-button" id="addLibraryButton" type="button">＋ Adicionar da biblioteca</button><button class="detail-button secondary-detail" id="backAlbums" type="button">← Ver todos os álbuns</button></div></div></section>
+        <div class="library-picker" id="libraryPicker" hidden></div>
+      </section>
+            <aside class="music-side">
+        <section class="photo-gallery" aria-label="Galeria de fotos"><div class="photo-frame" id="photoFrame"><div class="photo-empty"><strong>▧</strong><span>Adicione suas fotos para criar uma galeria<br>que muda sozinha ✦</span></div><div class="photo-dots" id="photoDots"></div><div class="photo-caption" id="photoCaption">Seu cantinho de fotos</div></div><div class="photo-tools"><small id="photoCount">Nenhuma foto adicionada</small><label class="pick-photo" for="photoPicker">＋ Adicionar fotos</label><input id="photoPicker" type="file" accept="image/*" multiple hidden></div></section>
+        <h3>Adicionar suas músicas</h3><p>Escolha MP3, WAV, OGG ou outros áudios salvos no seu dispositivo. Os arquivos ficam só no seu navegador.</p>
+        <label class="pick-audio" for="audioPicker">＋ Escolher arquivos</label><input id="audioPicker" type="file" accept="audio/*" multiple hidden>
+        <div class="track-list" id="trackList"><button class="track-row" disabled><span class="track-num">♫</span><span>Adicione seus áudios<small>Suas faixas aparecerão aqui</small></span></button></div>
+      </aside>
+    </div>
+    <div class="music-player"><div class="now-playing"><strong id="nowTitle">Nenhuma música selecionada</strong><span id="nowArtist">Adicione seus arquivos para ouvir</span></div><div class="player-controls"><button class="secondary" id="prevTrack" aria-label="Faixa anterior" disabled>⏮</button><button id="playTrack" aria-label="Tocar ou pausar" disabled>▶</button><button class="secondary" id="nextTrack" aria-label="Próxima faixa" disabled>⏭</button></div><input class="music-progress" id="musicProgress" type="range" min="0" max="100" value="0" aria-label="Posição da música"><div class="music-time"><span id="elapsed">0:00</span><span id="duration">0:00</span></div><audio class="music-audio" id="musicAudio"></audio></div>
+  </section>
+</div>
+<script>
+(() => {
+  const win = document.querySelector('.window');
+  const toast = document.getElementById('toast');
+  const menuItems = [...document.querySelectorAll('.menu-item')];
+  let historyStack = ['portfolio://inicio'], historyIndex = 0, toastTimer, fontSize = 14;
+  const say = message => { toast.textContent = message; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 2600); };
+  const closeMenus = () => menuItems.forEach(item => { item.classList.remove('open'); item.querySelector(':scope > button').setAttribute('aria-expanded','false'); });
+  menuItems.forEach(item => item.querySelector(':scope > button').addEventListener('click', event => {
+    event.stopPropagation(); const wasOpen = item.classList.contains('open'); closeMenus(); if (!wasOpen) { item.classList.add('open'); item.querySelector(':scope > button').setAttribute('aria-expanded','true'); }
+  }));
+  document.addEventListener('click', closeMenus);
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenus(); if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'p') { event.preventDefault(); window.print(); } });
+  document.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', async () => {
+    const action = button.dataset.action; closeMenus();
+    if (action === 'home') { window.scrollTo({top:0,behavior:'smooth'}); win.classList.remove('is-minimized'); say('Você voltou ao início.'); }
+    if (action === 'print') window.print();
+    if (action === 'about') { document.querySelector('.status').scrollIntoView({behavior:'smooth'}); say('Role até o final para encontrar o contato.'); }
+    if (action === 'copy') { try { await navigator.clipboard.writeText('seuemail@exemplo.com'); say('E-mail copiado! Troque pelo seu endereço quando personalizar.'); } catch { say('Configure seu e-mail no botão de contato.'); } }
+    if (action === 'top') window.scrollTo({top:0,behavior:'smooth'});
+    if (action === 'theme') { document.body.classList.toggle('dark'); say(document.body.classList.contains('dark') ? 'Tema noturno ativado.' : 'Tema claro ativado.'); }
+    if (action === 'motion') { document.body.classList.toggle('reduce-motion'); say(document.body.classList.contains('reduce-motion') ? 'Animações pausadas.' : 'Animações ativadas.'); }
+    if (action === 'zoom-in' || action === 'zoom-out') { fontSize = Math.max(12, Math.min(20, fontSize + (action === 'zoom-in' ? 1 : -1))); document.querySelector('.content').style.fontSize = fontSize + 'px'; say('Texto: ' + fontSize + ' px'); }
+    if (action === 'projects') { document.querySelector('.cards').scrollIntoView({behavior:'smooth'}); say('Aqui estão seus projetos.'); }
+    if (action === 'linkedin') window.open('https://www.linkedin.com/','_blank','noopener');
+    if (action === 'help') say('Use os menus para mudar o tema, navegar e ajustar a leitura.');
+    if (action === 'easter') { say('✨ Que bom ter você por aqui!'); for (let i=0;i<18;i++) { const s=document.createElement('span'); s.className='spark'; s.textContent=['✦','✿','★'][i%3]; s.style.left=(20+Math.random()*60)+'vw'; s.style.top=(20+Math.random()*55)+'vh'; s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*140-70)+'px'); document.body.append(s); setTimeout(()=>s.remove(),900); } }
+    if (action === 'favorite') { const saved = button.dataset.saved !== 'true'; button.dataset.saved = saved; say(saved ? 'Site adicionado aos favoritos do navegador: Ctrl+D.' : 'Lembrete de favorito ocultado.'); }
+  }));
+  document.querySelectorAll('[data-window]').forEach(button => button.addEventListener('click', () => {
+    const action = button.dataset.window;
+    if (action === 'min') { win.classList.add('is-minimized'); say('Janela minimizada. Clique no botão da barra para reabrir.'); }
+    if (action === 'max') { win.classList.toggle('is-maximized'); say(win.classList.contains('is-maximized') ? 'Janela maximizada.' : 'Tamanho original restaurado.'); }
+    if (action === 'close') { win.classList.add('is-minimized'); say('Janela fechada. Use a barra de tarefas para abrir de novo.'); }
+  }));
+  document.getElementById('taskButton').addEventListener('click', () => { win.classList.remove('is-minimized'); win.scrollIntoView({behavior:'smooth'}); });
+  document.querySelector('[data-home-window]').addEventListener('click',()=>{win.classList.remove('is-minimized');win.scrollIntoView({behavior:'smooth'});});
+  document.getElementById('startButton').addEventListener('click', () => { closeMenus(); say('Bem-vindo à estação pessoal! Explore os menus lá em cima.'); });
+  document.querySelectorAll('[data-nav]').forEach(button => button.addEventListener('click', () => {
+    const action=button.dataset.nav;
+    if(action==='reload') { win.classList.remove('is-minimized'); window.scrollTo({top:0,behavior:'smooth'}); say('Estação atualizada.'); }
+    if(action==='back') { historyIndex=Math.max(0,historyIndex-1); document.querySelector('.address').textContent='⌂  '+historyStack[historyIndex]; say('Voltou para '+historyStack[historyIndex]); }
+    if(action==='forward') { historyIndex=Math.min(historyStack.length-1,historyIndex+1); document.querySelector('.address').textContent='⌂  '+historyStack[historyIndex]; say('Avançou para '+historyStack[historyIndex]); }
+  }));
+  const photoWidgets = [...document.querySelectorAll('.photo-widget')];
+  const photoWidgetTask = document.getElementById('photoWidgetTask');
+  photoWidgetTask.addEventListener('click',()=>photoWidgets.forEach(widget=>widget.hidden=false));
+  photoWidgets.forEach(widget=>{
+    const handle=widget.querySelector('.photo-widget-head');
+    const frame=widget.querySelector('.photo-widget-frame');
+    const picker=widget.querySelector('input[type="file"]');
+    const caption=widget.querySelector('.photo-widget-caption')||document.getElementById('photoWidgetCaption');
+    let imageUrl='',drag=null;
+    widget.querySelector('.photo-widget-close').addEventListener('click',()=>widget.hidden=true);
+    picker.addEventListener('change',()=>{const file=picker.files[0];if(!file||!file.type.startsWith('image/'))return;if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=URL.createObjectURL(file);const img=document.createElement('img');img.alt=file.name;img.onload=()=>{const ratio=img.naturalWidth/img.naturalHeight;const maxWidth=Math.min(window.innerWidth<=700?420:500,window.innerWidth-24);const maxHeight=Math.min(640,window.innerHeight-150);let width=ratio<.82?Math.min(320,maxWidth):ratio>1.55?Math.min(480,maxWidth):Math.min(400,maxWidth);let height=Math.min(maxHeight,width/ratio);if(width/ratio>maxHeight){height=maxHeight;width=Math.min(maxWidth,Math.max(Math.min(100,maxWidth),height*ratio));}widget.style.width=width+'px';frame.style.height=Math.max(90,height)+'px';};img.src=imageUrl;frame.replaceChildren(img);caption.textContent=file.name;picker.value='';});
+    handle.addEventListener('pointerdown',event=>{if(event.target.closest('button'))return;const rect=widget.getBoundingClientRect();drag={x:event.clientX,y:event.clientY,left:rect.left,top:rect.top};widget.style.left=rect.left+'px';widget.style.top=rect.top+'px';widget.style.right='auto';handle.setPointerCapture(event.pointerId);});
+    handle.addEventListener('pointermove',event=>{if(!drag)return;const rect=widget.getBoundingClientRect();widget.style.left=Math.max(0,Math.min(window.innerWidth-rect.width,drag.left+event.clientX-drag.x))+'px';widget.style.top=Math.max(0,Math.min(window.innerHeight-rect.height-46,drag.top+event.clientY-drag.y))+'px';});
+    const stopDrag=()=>{drag=null;};handle.addEventListener('pointerup',stopDrag);handle.addEventListener('pointercancel',stopDrag);
+  });
+  const appOverlay = document.getElementById('appOverlay');
+  const appWindow = document.getElementById('appWindow');
+  const appContent = document.getElementById('appContent');
+  const appTaskButton = document.getElementById('appTaskButton');
+  const appData = {
+    about:['👤','Sobre mim',()=>'<h2>Sobre mim</h2>'+document.querySelector('.hero').outerHTML+document.querySelector('.about-grid').outerHTML],
+    projects:['🗂️','Meus Projetos',()=>'<h2>Projetos em destaque</h2>'+document.querySelector('.cards').outerHTML],
+    skills:['🛠️','Habilidades',()=>'<h2>Minha caixa de ferramentas</h2><article class="card"><p>Conhecimentos e ferramentas que estou desenvolvendo:</p>'+document.querySelector('.skill-list').outerHTML+'</article><p>Atualize esta lista com suas tecnologias, competências e idiomas.</p>'],
+    resume:['📄','Currículo',()=>'<h2>Currículo de Gustavo</h2><article class="card"><h3>Perfil profissional</h3><p>[Escreva um resumo curto da sua experiência, formação e objetivo profissional.]</p><h3>Formação</h3><p>[Curso, instituição e período]</p><h3>Experiência</h3><p>[Cargo, empresa e principais atividades]</p></article><button class="app-action" data-resume-download>↓ Baixar currículo de exemplo</button>'],
+    contact:['✉️','Contato',()=>'<h2>Vamos conversar?</h2><article class="card"><p>Estou disponível para conversar sobre projetos e oportunidades.</p><p><a class="button primary" href="mailto:seuemail@exemplo.com">✉ Enviar e-mail</a></p><p><a class="button" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">↗ Abrir LinkedIn</a></p></article>'],
+    notes:['📝','Meu Bloco de Ideias',()=>'<h2>Meu Bloco de Ideias</h2><p>Anote ideias, tarefas ou coisas que quer colocar no portfólio. Este app salva as notas neste navegador.</p><textarea id="notesArea" placeholder="Escreva suas ideias aqui..."></textarea><p id="notesStatus">Salvamento automático ativado.</p>']
+  };
+  let activeAppId='';
+  const openApp = id => { const data=appData[id]; if(!data)return; activeAppId=id; document.getElementById('appIcon').textContent=data[0]; document.getElementById('appTitle').textContent=data[1]; appContent.innerHTML=data[2](); appOverlay.classList.add('open'); appWindow.classList.remove('maximized'); appTaskButton.textContent=data[0]+'  '+data[1]; appTaskButton.classList.add('visible'); if(id==='notes'){const area=document.getElementById('notesArea');area.value=localStorage.getItem('aurora-notes')||'';area.addEventListener('input',()=>{localStorage.setItem('aurora-notes',area.value);document.getElementById('notesStatus').textContent='Salvo automaticamente ✓';});} };
+  document.querySelectorAll('[data-app]').forEach(icon=>icon.addEventListener('click',()=>openApp(icon.dataset.app)));
+  const closeApp = () => { appOverlay.classList.remove('open'); appTaskButton.classList.remove('visible'); appWindow.classList.remove('maximized'); };
+  document.getElementById('appClose').addEventListener('click',closeApp);
+  document.getElementById('appMinimize').addEventListener('click',()=>appOverlay.classList.remove('open'));
+  appTaskButton.addEventListener('click',()=>appOverlay.classList.toggle('open'));
+  document.getElementById('appMaximize').addEventListener('click',()=>appWindow.classList.toggle('maximized'));
+  appOverlay.addEventListener('click',event=>{if(event.target===appOverlay)closeApp();});
+  appContent.addEventListener('click',event=>{if(event.target.closest('[data-resume-download]')){const file=new Blob(['CURRÍCULO — [SEU NOME]\n\nPerfil: [escreva aqui seu resumo profissional]\nFormação: [curso e instituição]\nExperiência: [empresa e cargo]\nContato: seuemail@exemplo.com'],{type:'text/plain;charset=utf-8'});const link=document.createElement('a');link.href=URL.createObjectURL(file);link.download='curriculo-exemplo.txt';link.click();URL.revokeObjectURL(link.href);}});
+  const photoPicker = document.getElementById('photoPicker');
+  const photoFrame = document.getElementById('photoFrame');
+  const photoDots = document.getElementById('photoDots');
+  const photoCaption = document.getElementById('photoCaption');
+  const photoCount = document.getElementById('photoCount');
+  let photoUrls = [], photoIndex = 0, photoTimer;
+  const showPhoto = index => { if(!photoUrls.length)return; photoIndex=(index+photoUrls.length)%photoUrls.length; const old=photoFrame.querySelector('.photo-slide.visible'); if(old)old.classList.remove('visible'); let img=photoFrame.querySelector('.photo-slide[data-photo="'+photoIndex+'"]'); if(!img){img=document.createElement('img');img.className='photo-slide';img.dataset.photo=photoIndex;img.src=photoUrls[photoIndex].url;img.alt=photoUrls[photoIndex].name;photoFrame.insertBefore(img,photoDots);} requestAnimationFrame(()=>img.classList.add('visible')); photoFrame.classList.add('has-photo'); photoCaption.textContent=photoUrls[photoIndex].name; photoCount.textContent=(photoIndex+1)+' de '+photoUrls.length+' foto(s)'; photoDots.innerHTML=''; photoUrls.forEach((photo,dotIndex)=>{const dot=document.createElement('button');dot.type='button';dot.className='photo-dot'+(dotIndex===photoIndex?' active':'');dot.setAttribute('aria-label','Mostrar foto '+(dotIndex+1));dot.addEventListener('click',()=>showPhoto(dotIndex));photoDots.appendChild(dot);}); };
+  photoPicker.addEventListener('change',()=>{const files=[...photoPicker.files].filter(file=>file.type.startsWith('image/'));files.forEach(file=>photoUrls.push({url:URL.createObjectURL(file),name:file.name.replace(/\.[^.]+$/,'')}));if(files.length){showPhoto(photoUrls.length-files.length);clearInterval(photoTimer);if(photoUrls.length>1)photoTimer=setInterval(()=>showPhoto(photoIndex+1),4500);say(files.length+' foto(s) adicionada(s) à galeria.');}photoPicker.value='';});
+  const musicOverlay = document.getElementById('musicOverlay');
+  const audio = document.getElementById('musicAudio');
+  const picker = document.getElementById('audioPicker');
+  const rows = document.getElementById('trackList');
+  const playButton = document.getElementById('playTrack');
+  const progress = document.getElementById('musicProgress');
+  let musicFiles = [], musicIndex = -1, objectUrl = '', activeAlbum = '';
+  const albumTracks = { album:[], favoritas:[], energia:[], noite:[] };
+  const albumInfo = { album:['Meu álbum','Sua coleção pessoal de músicas.','one','♫'], favoritas:['Favoritas','As músicas que você mais gosta.','two','☼'], energia:['Energia boa','Sons para acompanhar o dia.','three','✦'], noite:['Playlist da noite','Sua seleção para ouvir à noite.','four','☾'] };
+  const timeText = seconds => { if (!Number.isFinite(seconds)) return '0:00'; return Math.floor(seconds/60)+':'+String(Math.floor(seconds%60)).padStart(2,'0'); };
+  const openMusic = () => { musicOverlay.classList.add('open'); };
+  const closeMusic = () => { musicOverlay.classList.remove('open'); };
+  document.querySelector('[data-open-music]').addEventListener('click', openMusic);
+  document.getElementById('musicTaskButton').addEventListener('click', openMusic);
+  document.getElementById('musicClose').addEventListener('click', closeMusic);
+  musicOverlay.addEventListener('click', event => { if(event.target===musicOverlay) closeMusic(); });
+  document.addEventListener('keydown', event => { if(event.key==='Escape') closeMusic(); });
+  const renderTracks = () => {
+    rows.innerHTML='';
+    const indexes=activeAlbum ? albumTracks[activeAlbum] : musicFiles.map((_,index)=>index);
+    if(!indexes.length){ rows.innerHTML='<button class="track-row" disabled><span class="track-num">♫</span><span>'+(activeAlbum?'Este álbum ainda está vazio':'Adicione seus áudios')+'<small>'+(activeAlbum?'Escolha arquivos ou adicione da biblioteca':'Suas faixas aparecerão aqui')+'</small></span></button>'; return; }
+    indexes.forEach((index,position)=>{ const file=musicFiles[index]; if(!file)return; const row=document.createElement('button'); row.className='track-row'+(index===musicIndex?' active':''); row.type='button'; row.innerHTML='<span class="track-num">'+String(position+1).padStart(2,'0')+'</span><span></span>'; const info=row.lastElementChild; const title=document.createElement('strong'); title.textContent=file.name.replace(/\.[^.]+$/,''); const sub=document.createElement('small'); sub.textContent='Da sua biblioteca'; info.replaceChildren(title,sub); row.addEventListener('click',()=>loadTrack(index,true)); rows.appendChild(row); });
+  };
+  const showAlbum = id => { activeAlbum=id; document.querySelector('.album-grid').hidden=true; document.getElementById('albumDetail').hidden=false; const info=albumInfo[id]; document.getElementById('detailTitle').textContent=info[0]; document.getElementById('detailDescription').textContent=info[1]; const cover=document.getElementById('detailCover'); cover.className='detail-cover album-art '+info[2]; cover.textContent=info[3]; document.querySelector('label[for=audioPicker]').textContent='＋ Adicionar faixas a este álbum'; document.getElementById('libraryPicker').hidden=true; renderTracks(); };
+  document.querySelectorAll('[data-album]').forEach(album=>album.addEventListener('click',()=>showAlbum(album.dataset.album)));
+  document.getElementById('backAlbums').addEventListener('click',()=>{activeAlbum='';document.querySelector('.album-grid').hidden=false;document.getElementById('albumDetail').hidden=true;document.getElementById('libraryPicker').hidden=true;document.querySelector('label[for=audioPicker]').textContent='＋ Escolher arquivos';renderTracks();});
+  const renderLibraryPicker = () => { const panel=document.getElementById('libraryPicker'); panel.innerHTML=''; const assigned=new Set(albumTracks[activeAlbum]); const available=musicFiles.map((file,index)=>({file,index})).filter(item=>!assigned.has(item.index)); if(!available.length){panel.innerHTML='<small class="music-description">Todas as músicas da biblioteca já estão neste álbum.</small>';return;} available.forEach(({file,index})=>{const option=document.createElement('button');option.className='library-pick-row';option.type='button';option.textContent='＋  '+file.name.replace(/\.[^.]+$/,'');option.addEventListener('click',()=>{albumTracks[activeAlbum].push(index);renderTracks();renderLibraryPicker();});panel.appendChild(option);}); };
+  document.getElementById('addLibraryButton').addEventListener('click',()=>{const panel=document.getElementById('libraryPicker');panel.hidden=!panel.hidden;if(!panel.hidden)renderLibraryPicker();});
+  const loadTrack = (index, autoplay) => { if(!musicFiles.length)return; musicIndex=(index+musicFiles.length)%musicFiles.length; if(objectUrl)URL.revokeObjectURL(objectUrl); objectUrl=URL.createObjectURL(musicFiles[musicIndex]); audio.src=objectUrl; document.getElementById('nowTitle').textContent=musicFiles[musicIndex].name.replace(/\.[^.]+$/,''); document.getElementById('nowArtist').textContent='Da sua biblioteca local'; playButton.disabled=false; document.getElementById('prevTrack').disabled=false; document.getElementById('nextTrack').disabled=false; renderTracks(); if(autoplay) audio.play().catch(()=>say('Clique em reproduzir para iniciar o áudio.')); };
+  picker.addEventListener('change',()=>{ const selected=[...picker.files].filter(file=>file.type.startsWith('audio/')); selected.forEach(file=>{const index=musicFiles.push(file)-1;if(activeAlbum)albumTracks[activeAlbum].push(index);}); renderTracks();if(activeAlbum)renderLibraryPicker();if(selected.length){if(musicIndex<0)loadTrack(activeAlbum?albumTracks[activeAlbum][0]:0,false);say(selected.length+' música(s) adicionada(s).');}picker.value=''; });
+  playButton.addEventListener('click',()=>{ if(audio.paused)audio.play();else audio.pause(); });
+  audio.addEventListener('play',()=>playButton.textContent='⏸'); audio.addEventListener('pause',()=>playButton.textContent='▶');
+  audio.addEventListener('timeupdate',()=>{progress.value=audio.duration?audio.currentTime/audio.duration*100:0; document.getElementById('elapsed').textContent=timeText(audio.currentTime); document.getElementById('duration').textContent=timeText(audio.duration);});
+  progress.addEventListener('input',()=>{if(audio.duration)audio.currentTime=progress.value/100*audio.duration;});
+  const stepTrack = direction => { const list=activeAlbum?albumTracks[activeAlbum]:musicFiles.map((_,index)=>index); if(!list.length)return; const position=list.indexOf(musicIndex); loadTrack(list[(position+direction+list.length)%list.length],true); };
+  document.getElementById('prevTrack').addEventListener('click',()=>stepTrack(-1)); document.getElementById('nextTrack').addEventListener('click',()=>stepTrack(1)); audio.addEventListener('ended',()=>stepTrack(1));  const updateClock = () => { document.getElementById('clock').textContent = new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit'}).format(new Date()); };
+  updateClock(); setInterval(updateClock,15000);
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
